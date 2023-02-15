@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,10 +36,12 @@ class MainActivity : ComponentActivity() {
                     color = Color(8, 113, 19)
                 ) {
                     Column(
-
+                        verticalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 20.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
@@ -57,23 +61,26 @@ class MainActivity : ComponentActivity() {
                         }
                         Column(
                             modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.SpaceAround,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Text(
-                                text = stringResource(id = R.string.comunity_question),
-                                modifier = Modifier.padding(bottom = 8.dp),
-                                color = Color.White,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Medium
-                            )
-                            Text(
-                                text = stringResource(id = R.string.faca_login),
-                                modifier = Modifier.padding(start = 30.dp, end = 30.dp),
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Normal,
-                                textAlign = TextAlign.Center
-                            )
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text(
+                                    text = stringResource(id = R.string.comunity_question),
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    color = Color.White,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.faca_login),
+                                    modifier = Modifier.padding(start = 30.dp, end = 30.dp),
+                                    color = Color.White,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                             Button(
                                 onClick = { /*TODO*/ },
                                 modifier = Modifier
@@ -100,10 +107,28 @@ class MainActivity : ComponentActivity() {
                                 contentDescription = "",
                                 modifier = Modifier.size(width = 300.dp, height = 300.dp)
                             )
-                            Text(
-                                text = stringResource(id = R.string.not_registered),
-                                color = Color.White,
-                            )
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.not_registered),
+                                    color = Color.White,
+                                    fontSize = 15.sp,
+                                    fontWeight = FontWeight.Normal
+                                )
+                                TextButton(onClick = { /*TODO*/ }) {
+                                    Text(
+                                        text = stringResource(id = R.string.register),
+                                        color = Color(
+                                            128,
+                                            204,
+                                            40
+                                        ),
+                                        fontSize = 15.sp,
+                                        fontWeight = FontWeight.Normal
+                                    )
+                                }
+                            }
                         }
                     }
                 }
