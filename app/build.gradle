@@ -60,4 +60,10 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    //Material 3 core
+    implementation "com.maxkeppeler.sheets-compose-dialogs:core:1.0.2"
+
+    //Material 3 calendar
+    implementation "com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2"
 }

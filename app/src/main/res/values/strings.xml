@@ -6,4 +6,16 @@
     <string name="login">ENTRAR</string>
     <string name="not_registered">Ainda não faz parte da nossa comunidade?</string>
     <string name="register">Registre-se</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_log_in">LogInActivity</string>
+    <string name="recycler">Reciclador</string>
+    <string name="catador">Catador</string>
+    <string name="welcome_message">Bem-vindo a Zero Waste!</string>
+    <string name="name_label">Nome Completo</string>
+    <string name="cpf_label">CPF/CNPJ</string>
+    <string name="email_label">E-mail</string>
+    <string name="telephone_label">Telefone</string>
+    <string name="password_label">Senha</string>
+    <string name="confirm_password_label">Confirmar Senha</string>
+    <string name="select_bithday">Selecione sua data de nascimento</string>
 </resources>

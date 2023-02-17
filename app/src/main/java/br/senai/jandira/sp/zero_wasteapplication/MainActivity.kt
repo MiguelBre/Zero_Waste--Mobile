@@ -1,5 +1,6 @@
 package br.senai.jandira.sp.zero_wasteapplication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -82,7 +83,10 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             Button(
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    val navigateToLogIn = Intent(this@MainActivity, LogInActivity::class.java)
+                                    startActivity(navigateToLogIn)
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(start = 60.dp, end = 60.dp),
@@ -116,7 +120,10 @@ class MainActivity : ComponentActivity() {
                                     fontSize = 15.sp,
                                     fontWeight = FontWeight.Normal
                                 )
-                                TextButton(onClick = { /*TODO*/ }) {
+                                TextButton(onClick = {
+                                    val navigateToSignIn = Intent(this@MainActivity, SignInActivity::class.java)
+                                    startActivity(navigateToSignIn)
+                                }) {
                                     Text(
                                         text = stringResource(id = R.string.register),
                                         color = Color(
