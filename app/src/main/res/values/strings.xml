@@ -18,4 +18,5 @@
     <string name="password_label">Senha</string>
     <string name="confirm_password_label">Confirmar Senha</string>
     <string name="select_bithday">Selecione sua data de nascimento</string>
+    <string name="login_as">Entrar como </string>
 </resources>
