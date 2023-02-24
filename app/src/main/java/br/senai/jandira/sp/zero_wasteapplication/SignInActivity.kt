@@ -266,7 +266,7 @@ fun ZeroWasteAppplication() {
                         placeholder = { Text(text = stringResource(id = R.string.cpf_label)) },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Default.Send, //Procurar um Icon para substituir o atual
+                                imageVector = Icons.Default.Code, //Procurar um Icon para substituir o atual
                                 contentDescription = ""
                             )
                         },
