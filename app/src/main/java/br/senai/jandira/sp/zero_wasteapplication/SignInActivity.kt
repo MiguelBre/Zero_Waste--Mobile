@@ -101,6 +101,18 @@ fun ZeroWasteAppplication() {
         mutableStateOf("")
     }
 
+    var cepValueChange by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var residencialValueChange by rememberSaveable(){
+        mutableStateOf("")
+    }
+
+    var complementValueChange by rememberSaveable() {
+        mutableStateOf("")
+    }
+
     var passwordValueChange by rememberSaveable() {
         mutableStateOf("")
     }
@@ -211,15 +223,6 @@ fun ZeroWasteAppplication() {
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-//            Text(
-//                text = stringResource(id = R.string.welcome_message),
-//                modifier = Modifier
-//                    .padding(top = 20.dp, bottom = 20.dp)
-//                    .fillMaxWidth(),
-//                fontSize = 18,
-//                fontWeight = FontWeight.ExtraBold,
-//                textAlign = TextAlign.Center
-//            )
             AnimatedVisibility(
                 visible = recicladorClick,
                 enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
@@ -311,6 +314,70 @@ fun ZeroWasteAppplication() {
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
                     )
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Row {
+                        OutlinedTextField(
+                            value = cepValueChange, onValueChange = { newValue ->
+                                cepValueChange = newValue
+                            },
+                            modifier = Modifier
+                                .width(220.dp)
+                                .padding(start = 30.dp)
+                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                            placeholder = { Text(text = stringResource(id = R.string.cep_label)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Home,
+                                    contentDescription = ""
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        OutlinedTextField(
+                            value = residencialValueChange, onValueChange = { newValue ->
+                                residencialValueChange = newValue
+                            },
+                            modifier = Modifier
+                                .width(200.dp)
+                                .padding(end = 30.dp)
+                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                            placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
+                                    contentDescription = ""
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(15.dp))
+                    OutlinedTextField(
+                        value = complementValueChange, onValueChange = { newValue ->
+                            complementValueChange = newValue
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 30.dp, end = 30.dp)
+                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                        placeholder = { Text(text = stringResource(id = R.string.complement_label)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Info,
+                                contentDescription = ""
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+
                     CalendarDialog(
                         state = calendarState,
                         config = CalendarConfig(
@@ -404,7 +471,7 @@ fun ZeroWasteAppplication() {
                     Button(
                         onClick = { /*TODO*/ },
                         modifier = Modifier
-                        .padding(start = 30.dp, end = 30.dp),
+                            .padding(start = 30.dp, end = 30.dp),
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 204, 40))
                     ) {
                         Text(
@@ -508,6 +575,69 @@ fun ZeroWasteAppplication() {
                             )
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Row {
+                        OutlinedTextField(
+                            value = cepValueChange, onValueChange = { newValue ->
+                                cepValueChange = newValue
+                            },
+                            modifier = Modifier
+                                .width(220.dp)
+                                .padding(start = 30.dp)
+                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                            placeholder = { Text(text = stringResource(id = R.string.cep_label)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Home,
+                                    contentDescription = ""
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        OutlinedTextField(
+                            value = residencialValueChange, onValueChange = { newValue ->
+                                residencialValueChange = newValue
+                            },
+                            modifier = Modifier
+                                .width(200.dp)
+                                .padding(end = 30.dp)
+                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                            placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
+                                    contentDescription = ""
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(15.dp))
+                    OutlinedTextField(
+                        value = complementValueChange, onValueChange = { newValue ->
+                            complementValueChange = newValue
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 30.dp, end = 30.dp)
+                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                        placeholder = { Text(text = stringResource(id = R.string.complement_label)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Info,
+                                contentDescription = ""
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
                     )
