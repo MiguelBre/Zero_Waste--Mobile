@@ -219,7 +219,7 @@ fun ZeroWasteAppplication() {
                     Text(
                         text = stringResource(id = R.string.recycler),
                         modifier = Modifier
-                            .background(color1)
+                            .background(color1, shape = RoundedCornerShape(topStart = 5.dp, bottomStart = 5.dp))
                             .clickable {
                                 recicladorClick = true
                                 catadorClick = false
@@ -238,7 +238,7 @@ fun ZeroWasteAppplication() {
                     Text(
                         text = stringResource(id = R.string.catador),
                         modifier = Modifier
-                            .background(color2)
+                            .background(color2, shape = RoundedCornerShape(topEnd = 5.dp, bottomEnd = 5.dp))
                             .clickable {
                                 recicladorClick = false
                                 catadorClick = true
@@ -268,11 +268,11 @@ fun ZeroWasteAppplication() {
             AnimatedVisibility(
                 visible = recicladorClick,
                 enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
-                    animationSpec = tween(durationMillis = 200)
+                    animationSpec = tween(durationMillis = 300)
                 ),
                 exit =
                 slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
-                    200
+                    300
                 } + fadeOut()
             ) {
                 Column(
@@ -548,7 +548,7 @@ fun ZeroWasteAppplication() {
                 ),
                 exit =
                 slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
-                    200
+                    300
                 } + fadeOut()
             ) {
                 Column(
