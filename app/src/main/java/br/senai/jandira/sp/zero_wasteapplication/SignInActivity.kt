@@ -1,8 +1,6 @@
 package br.senai.jandira.sp.zero_wasteapplication
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.*
@@ -14,25 +12,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.Face
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
@@ -45,8 +35,6 @@ import com.maxkeppeker.sheets.core.models.base.rememberSheetState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
-import java.sql.Ref
-import java.time.LocalDate
 
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,45 +73,99 @@ fun ZeroWasteAppplication() {
         mutableStateOf(Color.Transparent)
     }
 
-    var nameValueChange by rememberSaveable() {
+    var nameValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var CPFValueChange by rememberSaveable() {
+    var cpfValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var emailValueChange by rememberSaveable() {
+    var emailValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var telephoneValueChange by rememberSaveable() {
+    var telephoneValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var cepValueChange by rememberSaveable() {
+    var cepValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var residencialValueChange by rememberSaveable(){
+    var residencialValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var complementValueChange by rememberSaveable() {
+    var complementValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var passwordValueChange by rememberSaveable() {
+    var passwordValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
-    var confirmPasswordValueChange by rememberSaveable() {
+    var confirmPasswordValueChangeReciclador by rememberSaveable() {
         mutableStateOf("")
     }
 
     val calendarState = rememberSheetState()
 
-    var birthdayValueChange by rememberSaveable() {
+    var birthdayValueChangeReciclador by rememberSaveable() {
+        mutableStateOf("Ano-Mes-Dia")
+    }
+
+    var passwordVisibility by remember { mutableStateOf(false) }
+    var confirmPasswordVisibility by remember { mutableStateOf(false) }
+
+    val icon = if (passwordVisibility) {
+        painterResource(id = R.drawable.visibility_icon_on)
+    } else {
+        painterResource(id = R.drawable.visibility_icon_off)
+    }
+    val confirmIcon = if (confirmPasswordVisibility) {
+        painterResource(id = R.drawable.visibility_icon_on)
+    } else {
+        painterResource(id = R.drawable.visibility_icon_off)
+    }
+
+    var nameValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var cpfValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var emailValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var telephoneValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var cepValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var residencialValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var complementValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var passwordValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var confirmPasswordValueChangeCatador by rememberSaveable() {
+        mutableStateOf("")
+    }
+
+    var birthdayValueChangeCatador by rememberSaveable() {
         mutableStateOf("Ano-Mes-Dia")
     }
 
@@ -237,8 +279,8 @@ fun ZeroWasteAppplication() {
                     modifier = Modifier.verticalScroll(rememberScrollState())
                 ) {
                     OutlinedTextField(
-                        value = nameValueChange, onValueChange = { newValue ->
-                            nameValueChange = newValue
+                        value = nameValueChangeReciclador, onValueChange = { newValue ->
+                            nameValueChangeReciclador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -256,8 +298,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = CPFValueChange, onValueChange = { newValue ->
-                            CPFValueChange = newValue
+                        value = cpfValueChangeReciclador, onValueChange = { newValue ->
+                            cpfValueChangeReciclador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -276,8 +318,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = emailValueChange, onValueChange = { newValue ->
-                            emailValueChange = newValue
+                        value = emailValueChangeReciclador, onValueChange = { newValue ->
+                            emailValueChangeReciclador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -296,8 +338,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = telephoneValueChange, onValueChange = { newValue ->
-                            telephoneValueChange = newValue
+                        value = telephoneValueChangeReciclador, onValueChange = { newValue ->
+                            telephoneValueChangeReciclador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -317,8 +359,8 @@ fun ZeroWasteAppplication() {
                     Spacer(modifier = Modifier.height(15.dp))
                     Row {
                         OutlinedTextField(
-                            value = cepValueChange, onValueChange = { newValue ->
-                                cepValueChange = newValue
+                            value = cepValueChangeReciclador, onValueChange = { newValue ->
+                                cepValueChangeReciclador = newValue
                             },
                             modifier = Modifier
                                 .width(220.dp)
@@ -337,8 +379,8 @@ fun ZeroWasteAppplication() {
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         OutlinedTextField(
-                            value = residencialValueChange, onValueChange = { newValue ->
-                                residencialValueChange = newValue
+                            value = residencialValueChangeReciclador, onValueChange = { newValue ->
+                                residencialValueChangeReciclador = newValue
                             },
                             modifier = Modifier
                                 .width(200.dp)
@@ -359,8 +401,8 @@ fun ZeroWasteAppplication() {
 
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = complementValueChange, onValueChange = { newValue ->
-                            complementValueChange = newValue
+                        value = complementValueChangeReciclador, onValueChange = { newValue ->
+                            complementValueChangeReciclador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -384,7 +426,7 @@ fun ZeroWasteAppplication() {
                             yearSelection = true
                         ),
                         selection = CalendarSelection.Date { birthdate ->
-                            birthdayValueChange = birthdate.toString()
+                            birthdayValueChangeReciclador = birthdate.toString()
                         }
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -404,7 +446,7 @@ fun ZeroWasteAppplication() {
                         )
                     }
                     Text(
-                        text = birthdayValueChange,
+                        text = birthdayValueChangeReciclador,
                         modifier = Modifier
                             .padding(start = 30.dp, end = 30.dp)
                             .background(color = Color.White, shape = RoundedCornerShape(5.dp))
@@ -415,8 +457,9 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = passwordValueChange, onValueChange = { newValue ->
-                            passwordValueChange = newValue
+                        value = passwordValueChangeReciclador,
+                        onValueChange = { newValue ->
+                            passwordValueChangeReciclador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -430,20 +473,26 @@ fun ZeroWasteAppplication() {
                             )
                         },
                         trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Edit,   //Encontrar pasta que contanha o icon: Ver senha
-                                contentDescription = ""
-                            )
+                            IconButton(onClick = {
+                                passwordVisibility = !passwordVisibility
+                            }) {
+                                Icon(
+                                    painter = icon,
+                                    contentDescription = "visibility icon",
+                                    modifier = Modifier.width(40.dp)
+                                )
+                            }
                         },
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = confirmPasswordValueChange, onValueChange = { newValue ->
-                            confirmPasswordValueChange = newValue
+                        value = confirmPasswordValueChangeReciclador,
+                        onValueChange = { newValue ->
+                            confirmPasswordValueChangeReciclador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -457,13 +506,18 @@ fun ZeroWasteAppplication() {
                             )
                         },
                         trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Edit,   //Encontrar pasta que contanha o icon: Ver senha
-                                contentDescription = ""
-                            )
+                            IconButton(onClick = {
+                                confirmPasswordVisibility = !confirmPasswordVisibility
+                            }) {
+                                Icon(
+                                    painter = confirmIcon,
+                                    contentDescription = "Visibility Icon",
+                                    modifier = Modifier.width(40.dp)
+                                )
+                            }
                         },
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                        visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
                     )
@@ -501,8 +555,8 @@ fun ZeroWasteAppplication() {
                     modifier = Modifier.verticalScroll(rememberScrollState())
                 ) {
                     OutlinedTextField(
-                        value = nameValueChange, onValueChange = { newValue ->
-                            nameValueChange = newValue
+                        value = nameValueChangeCatador, onValueChange = { newValue ->
+                            nameValueChangeCatador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -520,8 +574,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = CPFValueChange, onValueChange = { newValue ->
-                            CPFValueChange = newValue
+                        value = cpfValueChangeCatador, onValueChange = { newValue ->
+                            cpfValueChangeCatador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -540,8 +594,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = emailValueChange, onValueChange = { newValue ->
-                            emailValueChange = newValue
+                        value = emailValueChangeCatador, onValueChange = { newValue ->
+                            emailValueChangeCatador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -560,8 +614,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = telephoneValueChange, onValueChange = { newValue ->
-                            telephoneValueChange = newValue
+                        value = telephoneValueChangeCatador, onValueChange = { newValue ->
+                            telephoneValueChangeCatador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -581,8 +635,8 @@ fun ZeroWasteAppplication() {
                     Spacer(modifier = Modifier.height(15.dp))
                     Row {
                         OutlinedTextField(
-                            value = cepValueChange, onValueChange = { newValue ->
-                                cepValueChange = newValue
+                            value = cepValueChangeCatador, onValueChange = { newValue ->
+                                cepValueChangeCatador = newValue
                             },
                             modifier = Modifier
                                 .width(220.dp)
@@ -601,8 +655,8 @@ fun ZeroWasteAppplication() {
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         OutlinedTextField(
-                            value = residencialValueChange, onValueChange = { newValue ->
-                                residencialValueChange = newValue
+                            value = residencialValueChangeCatador, onValueChange = { newValue ->
+                                residencialValueChangeCatador = newValue
                             },
                             modifier = Modifier
                                 .width(200.dp)
@@ -623,8 +677,8 @@ fun ZeroWasteAppplication() {
 
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = complementValueChange, onValueChange = { newValue ->
-                            complementValueChange = newValue
+                        value = complementValueChangeCatador, onValueChange = { newValue ->
+                            complementValueChangeCatador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -647,7 +701,7 @@ fun ZeroWasteAppplication() {
                             yearSelection = true
                         ),
                         selection = CalendarSelection.Date { birthdate ->
-                            birthdayValueChange = birthdate.toString()
+                            birthdayValueChangeCatador = birthdate.toString()
                         }
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -667,7 +721,7 @@ fun ZeroWasteAppplication() {
                         )
                     }
                     Text(
-                        text = birthdayValueChange,
+                        text = birthdayValueChangeCatador,
                         modifier = Modifier
                             .padding(start = 30.dp, end = 30.dp)
                             .background(color = Color.White, shape = RoundedCornerShape(5.dp))
@@ -678,8 +732,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = passwordValueChange, onValueChange = { newValue ->
-                            passwordValueChange = newValue
+                        value = passwordValueChangeCatador, onValueChange = { newValue ->
+                            passwordValueChangeCatador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -693,20 +747,25 @@ fun ZeroWasteAppplication() {
                             )
                         },
                         trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Edit,   //Encontrar pasta que contanha o icon: Ver senha
-                                contentDescription = ""
-                            )
+                            IconButton(onClick = {
+                                passwordVisibility = !passwordVisibility
+                            }) {
+                                Icon(
+                                    painter = icon,
+                                    contentDescription = "visibility icon",
+                                    modifier = Modifier.width(40.dp)
+                                )
+                            }
                         },
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = confirmPasswordValueChange, onValueChange = { newValue ->
-                            confirmPasswordValueChange = newValue
+                        value = confirmPasswordValueChangeCatador, onValueChange = { newValue ->
+                            confirmPasswordValueChangeCatador = newValue
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -720,13 +779,18 @@ fun ZeroWasteAppplication() {
                             )
                         },
                         trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Edit,   //Encontrar pasta que contanha o icon: Ver senha
-                                contentDescription = ""
-                            )
+                            IconButton(onClick = {
+                                confirmPasswordVisibility = !confirmPasswordVisibility
+                            }) {
+                                Icon(
+                                    painter = confirmIcon,
+                                    contentDescription = "visibility icon",
+                                    modifier = Modifier.width(40.dp)
+                                )
+                            }
                         },
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                        visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
                         shape = RoundedCornerShape(10.dp)
                     )
