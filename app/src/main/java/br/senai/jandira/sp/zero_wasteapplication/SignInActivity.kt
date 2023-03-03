@@ -73,45 +73,45 @@ fun ZeroWasteAppplication() {
         mutableStateOf(Color.Transparent)
     }
 
-    var nameValueChangeReciclador by rememberSaveable() {
+    var nameValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cpfValueChangeReciclador by rememberSaveable() {
+    var cpfValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var emailValueChangeReciclador by rememberSaveable() {
+    var emailValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var telephoneValueChangeReciclador by rememberSaveable() {
+    var telephoneValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cepValueChangeReciclador by rememberSaveable() {
+    var cepValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var residencialValueChangeReciclador by rememberSaveable() {
+    var residencialValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var complementValueChangeReciclador by rememberSaveable() {
+    var complementValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var passwordValueChangeReciclador by rememberSaveable() {
+    var passwordValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var confirmPasswordValueChangeReciclador by rememberSaveable() {
+    var confirmPasswordValueChangeReciclador by rememberSaveable {
         mutableStateOf("")
     }
 
     val calendarState = rememberSheetState()
 
-    var birthdayValueChangeReciclador by rememberSaveable() {
+    var birthdayValueChangeReciclador by rememberSaveable {
         mutableStateOf("Ano-Mes-Dia")
     }
 
@@ -129,47 +129,55 @@ fun ZeroWasteAppplication() {
         painterResource(id = R.drawable.visibility_icon_off)
     }
 
-    var nameValueChangeCatador by rememberSaveable() {
+    var nameValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cpfValueChangeCatador by rememberSaveable() {
+    var cpfValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var emailValueChangeCatador by rememberSaveable() {
+    var emailValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var telephoneValueChangeCatador by rememberSaveable() {
+    var telephoneValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cepValueChangeCatador by rememberSaveable() {
+    var cepValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var residencialValueChangeCatador by rememberSaveable() {
+    var residencialValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var complementValueChangeCatador by rememberSaveable() {
+    var complementValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var passwordValueChangeCatador by rememberSaveable() {
+    var passwordValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var confirmPasswordValueChangeCatador by rememberSaveable() {
+    var confirmPasswordValueChangeCatador by rememberSaveable {
         mutableStateOf("")
     }
 
-    var birthdayValueChangeCatador by rememberSaveable() {
+    var birthdayValueChangeCatador by rememberSaveable {
         mutableStateOf("Ano-Mes-Dia")
     }
 
-    Column() {
+    var confirmPassError by remember {
+        mutableStateOf(false)
+    }
+
+    fun validatePass(pass: String, confirmPass: String): Boolean {
+        return confirmPass != pass
+    }
+
+    Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -219,7 +227,10 @@ fun ZeroWasteAppplication() {
                     Text(
                         text = stringResource(id = R.string.recycler),
                         modifier = Modifier
-                            .background(color1, shape = RoundedCornerShape(topStart = 5.dp, bottomStart = 5.dp))
+                            .background(
+                                color1,
+                                shape = RoundedCornerShape(topStart = 5.dp, bottomStart = 5.dp)
+                            )
                             .clickable {
                                 recicladorClick = true
                                 catadorClick = false
@@ -238,7 +249,10 @@ fun ZeroWasteAppplication() {
                     Text(
                         text = stringResource(id = R.string.catador),
                         modifier = Modifier
-                            .background(color2, shape = RoundedCornerShape(topEnd = 5.dp, bottomEnd = 5.dp))
+                            .background(
+                                color2,
+                                shape = RoundedCornerShape(topEnd = 5.dp, bottomEnd = 5.dp)
+                            )
                             .clickable {
                                 recicladorClick = false
                                 catadorClick = true
@@ -479,7 +493,7 @@ fun ZeroWasteAppplication() {
                                 Icon(
                                     painter = icon,
                                     contentDescription = "visibility icon",
-                                    modifier = Modifier.width(40.dp)
+                                    modifier = Modifier.width(35.dp)
                                 )
                             }
                         },
@@ -501,8 +515,16 @@ fun ZeroWasteAppplication() {
                         placeholder = { Text(text = stringResource(id = R.string.confirm_password_label)) },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = ""
+                                imageVector = if (confirmPassError) {
+                                    Icons.Default.Error
+                                } else {
+                                    Icons.Default.Lock
+                                },
+                                contentDescription = "",
+                                tint = if (confirmPassError)
+                                    Color.Red
+                                else
+                                    Color.Gray
                             )
                         },
                         trailingIcon = {
@@ -512,10 +534,11 @@ fun ZeroWasteAppplication() {
                                 Icon(
                                     painter = confirmIcon,
                                     contentDescription = "Visibility Icon",
-                                    modifier = Modifier.width(40.dp)
+                                    modifier = Modifier.width(35.dp)
                                 )
                             }
                         },
+                        isError = confirmPassError,
                         visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
@@ -523,7 +546,12 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            confirmPassError = validatePass(
+                                passwordValueChangeReciclador,
+                                confirmPasswordValueChangeReciclador
+                            )
+                        },
                         modifier = Modifier
                             .padding(start = 30.dp, end = 30.dp),
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 204, 40))
@@ -753,7 +781,7 @@ fun ZeroWasteAppplication() {
                                 Icon(
                                     painter = icon,
                                     contentDescription = "visibility icon",
-                                    modifier = Modifier.width(40.dp)
+                                    modifier = Modifier.width(35.dp)
                                 )
                             }
                         },
@@ -785,7 +813,7 @@ fun ZeroWasteAppplication() {
                                 Icon(
                                     painter = confirmIcon,
                                     contentDescription = "visibility icon",
-                                    modifier = Modifier.width(40.dp)
+                                    modifier = Modifier.width(35.dp)
                                 )
                             }
                         },
