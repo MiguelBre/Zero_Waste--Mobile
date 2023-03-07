@@ -792,7 +792,8 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedTextField(
-                        value = confirmPasswordValueChangeCatador, onValueChange = { newValue ->
+                        value = confirmPasswordValueChangeCatador,
+                        onValueChange = { newValue ->
                             confirmPasswordValueChangeCatador = newValue
                         },
                         modifier = Modifier
@@ -802,8 +803,16 @@ fun ZeroWasteAppplication() {
                         placeholder = { Text(text = stringResource(id = R.string.confirm_password_label)) },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = ""
+                                imageVector = if (confirmPassError) {
+                                    Icons.Default.Error
+                                } else {
+                                    Icons.Default.Lock
+                                },
+                                contentDescription = "",
+                                tint = if (confirmPassError)
+                                    Color.Red
+                                else
+                                    Color.Gray
                             )
                         },
                         trailingIcon = {
@@ -812,11 +821,12 @@ fun ZeroWasteAppplication() {
                             }) {
                                 Icon(
                                     painter = confirmIcon,
-                                    contentDescription = "visibility icon",
+                                    contentDescription = "Visibility Icon",
                                     modifier = Modifier.width(35.dp)
                                 )
                             }
                         },
+                        isError = confirmPassError,
                         visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
@@ -824,7 +834,12 @@ fun ZeroWasteAppplication() {
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            confirmPassError = validatePass(
+                                passwordValueChangeCatador,
+                                confirmPasswordValueChangeCatador
+                            )
+                                  },
                         modifier = Modifier
                             .padding(start = 30.dp, end = 30.dp),
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 204, 40))
