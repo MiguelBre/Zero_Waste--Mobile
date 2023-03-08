@@ -69,49 +69,50 @@ fun ZeroWasteAppplication() {
     var color1 by remember {
         mutableStateOf(Color(128, 204, 40))
     }
+
     var color2 by remember {
         mutableStateOf(Color.Transparent)
     }
 
-    var nameValueChangeReciclador by rememberSaveable {
+    var nameValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cpfValueChangeReciclador by rememberSaveable {
+    var cpfValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var emailValueChangeReciclador by rememberSaveable {
+    var emailValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var telephoneValueChangeReciclador by rememberSaveable {
+    var telephoneValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cepValueChangeReciclador by rememberSaveable {
+    var cepValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var residencialValueChangeReciclador by rememberSaveable {
+    var residencialValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var complementValueChangeReciclador by rememberSaveable {
+    var complementValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var passwordValueChangeReciclador by rememberSaveable {
+    var passwordValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
-    var confirmPasswordValueChangeReciclador by rememberSaveable {
+    var confirmPasswordValueChange by rememberSaveable {
         mutableStateOf("")
     }
 
     val calendarState = rememberSheetState()
 
-    var birthdayValueChangeReciclador by rememberSaveable {
+    var birthdayValueChange by rememberSaveable {
         mutableStateOf("Ano-Mes-Dia")
     }
 
@@ -123,50 +124,11 @@ fun ZeroWasteAppplication() {
     } else {
         painterResource(id = R.drawable.visibility_icon_off)
     }
+
     val confirmIcon = if (confirmPasswordVisibility) {
         painterResource(id = R.drawable.visibility_icon_on)
     } else {
         painterResource(id = R.drawable.visibility_icon_off)
-    }
-
-    var nameValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var cpfValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var emailValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var telephoneValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var cepValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var residencialValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var complementValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var passwordValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var confirmPasswordValueChangeCatador by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var birthdayValueChangeCatador by rememberSaveable {
-        mutableStateOf("Ano-Mes-Dia")
     }
 
     var confirmPassError by remember {
@@ -279,277 +241,277 @@ fun ZeroWasteAppplication() {
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-            AnimatedVisibility(
-                visible = recicladorClick,
-                enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
-                    animationSpec = tween(durationMillis = 300)
-                ),
-                exit =
-                slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
-                    300
-                } + fadeOut()
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
-                Column(
-                    modifier = Modifier.verticalScroll(rememberScrollState())
+                OutlinedTextField(
+                    value = nameValueChange, onValueChange = { newValue ->
+                        nameValueChange = newValue
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                    placeholder = { Text(text = stringResource(id = R.string.name_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = ""
+                        )
+                    },
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                OutlinedTextField(
+                    value = cpfValueChange, onValueChange = { newValue ->
+                        cpfValueChange = newValue
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                    placeholder = { Text(text = stringResource(id = R.string.cpf_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Code, //Procurar um Icon para substituir o atual
+                            contentDescription = ""
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                OutlinedTextField(
+                    value = emailValueChange, onValueChange = { newValue ->
+                        emailValueChange = newValue
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                    placeholder = { Text(text = stringResource(id = R.string.email_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Email,
+                            contentDescription = ""
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                OutlinedTextField(
+                    value = telephoneValueChange, onValueChange = { newValue ->
+                        telephoneValueChange = newValue
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                    placeholder = { Text(text = stringResource(id = R.string.telephone_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Phone,
+                            contentDescription = ""
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                Row {
+                    OutlinedTextField(
+                        value = cepValueChange, onValueChange = { newValue ->
+                            cepValueChange = newValue
+                        },
+                        modifier = Modifier
+                            .width(220.dp)
+                            .padding(start = 30.dp)
+                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                        placeholder = { Text(text = stringResource(id = R.string.cep_label)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Home,
+                                contentDescription = ""
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    OutlinedTextField(
+                        value = residencialValueChange, onValueChange = { newValue ->
+                            residencialValueChange = newValue
+                        },
+                        modifier = Modifier
+                            .width(200.dp)
+                            .padding(end = 30.dp)
+                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                        placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
+                                contentDescription = ""
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(15.dp))
+                OutlinedTextField(
+                    value = complementValueChange, onValueChange = { newValue ->
+                        complementValueChange = newValue
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                    placeholder = { Text(text = stringResource(id = R.string.complement_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = ""
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+
+                CalendarDialog(
+                    state = calendarState,
+                    config = CalendarConfig(
+                        yearSelection = true
+                    ),
+                    selection = CalendarSelection.Date { birthdate ->
+                        birthdayValueChange = birthdate.toString()
+                    }
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(
+                    onClick = {
+                        calendarState.show()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 204, 40))
                 ) {
-                    OutlinedTextField(
-                        value = nameValueChangeReciclador, onValueChange = { newValue ->
-                            nameValueChangeReciclador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.name_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Person,
-                                contentDescription = ""
-                            )
-                        },
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = cpfValueChangeReciclador, onValueChange = { newValue ->
-                            cpfValueChangeReciclador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.cpf_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Code, //Procurar um Icon para substituir o atual
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = emailValueChangeReciclador, onValueChange = { newValue ->
-                            emailValueChangeReciclador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.email_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Email,
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = telephoneValueChangeReciclador, onValueChange = { newValue ->
-                            telephoneValueChangeReciclador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.telephone_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Phone,
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Row {
-                        OutlinedTextField(
-                            value = cepValueChangeReciclador, onValueChange = { newValue ->
-                                cepValueChangeReciclador = newValue
-                            },
-                            modifier = Modifier
-                                .width(220.dp)
-                                .padding(start = 30.dp)
-                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                            placeholder = { Text(text = stringResource(id = R.string.cep_label)) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Home,
-                                    contentDescription = ""
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true,
-                            shape = RoundedCornerShape(10.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        OutlinedTextField(
-                            value = residencialValueChangeReciclador, onValueChange = { newValue ->
-                                residencialValueChangeReciclador = newValue
-                            },
-                            modifier = Modifier
-                                .width(200.dp)
-                                .padding(end = 30.dp)
-                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                            placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
-                                    contentDescription = ""
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true,
-                            shape = RoundedCornerShape(10.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = complementValueChangeReciclador, onValueChange = { newValue ->
-                            complementValueChangeReciclador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.complement_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Info,
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-
-                    CalendarDialog(
-                        state = calendarState,
-                        config = CalendarConfig(
-                            yearSelection = true
-                        ),
-                        selection = CalendarSelection.Date { birthdate ->
-                            birthdayValueChangeReciclador = birthdate.toString()
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Button(
-                        onClick = {
-                            calendarState.show()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 204, 40))
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.select_bithday),
-                            color = Color.White,
-                            fontSize = 16.sp
-                        )
-                    }
                     Text(
-                        text = birthdayValueChangeReciclador,
-                        modifier = Modifier
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(5.dp))
-                            .height(30.dp)
-                            .fillMaxWidth(),
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center
+                        text = stringResource(id = R.string.select_bithday),
+                        color = Color.White,
+                        fontSize = 16.sp
                     )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = passwordValueChangeReciclador,
-                        onValueChange = { newValue ->
-                            passwordValueChangeReciclador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.password_label)) },
-                        leadingIcon = {
+                }
+                Text(
+                    text = birthdayValueChange,
+                    modifier = Modifier
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(5.dp))
+                        .height(30.dp)
+                        .fillMaxWidth(),
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                OutlinedTextField(
+                    value = passwordValueChange,
+                    onValueChange = { newValue ->
+                        passwordValueChange = newValue
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                    placeholder = { Text(text = stringResource(id = R.string.password_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = ""
+                        )
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            passwordVisibility = !passwordVisibility
+                        }) {
                             Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = ""
+                                painter = icon,
+                                contentDescription = "visibility icon",
+                                modifier = Modifier.width(35.dp)
                             )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                passwordVisibility = !passwordVisibility
-                            }) {
-                                Icon(
-                                    painter = icon,
-                                    contentDescription = "visibility icon",
-                                    modifier = Modifier.width(35.dp)
-                                )
-                            }
-                        },
-                        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = confirmPasswordValueChangeReciclador,
-                        onValueChange = { newValue ->
-                            confirmPasswordValueChangeReciclador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.confirm_password_label)) },
-                        leadingIcon = {
+                        }
+                    },
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                Spacer(modifier = Modifier.height(15.dp))
+                OutlinedTextField(
+                    value = confirmPasswordValueChange,
+                    onValueChange = { newValue ->
+                        confirmPasswordValueChange = newValue
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                    placeholder = { Text(text = stringResource(id = R.string.confirm_password_label)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = if (confirmPassError) {
+                                Icons.Default.Error
+                            } else {
+                                Icons.Default.Lock
+                            },
+                            contentDescription = "",
+                            tint = if (confirmPassError)
+                                Color.Red
+                            else
+                                Color.Gray
+                        )
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            confirmPasswordVisibility = !confirmPasswordVisibility
+                        }) {
                             Icon(
-                                imageVector = if (confirmPassError) {
-                                    Icons.Default.Error
-                                } else {
-                                    Icons.Default.Lock
-                                },
-                                contentDescription = "",
-                                tint = if (confirmPassError)
-                                    Color.Red
-                                else
-                                    Color.Gray
+                                painter = confirmIcon,
+                                contentDescription = "Visibility Icon",
+                                modifier = Modifier.width(35.dp)
                             )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                confirmPasswordVisibility = !confirmPasswordVisibility
-                            }) {
-                                Icon(
-                                    painter = confirmIcon,
-                                    contentDescription = "Visibility Icon",
-                                    modifier = Modifier.width(35.dp)
-                                )
-                            }
-                        },
-                        isError = confirmPassError,
-                        visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
+                        }
+                    },
+                    isError = confirmPassError,
+                    visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    singleLine = true,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                AnimatedVisibility(
+                    visible = recicladorClick,
+                    enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
+                        animationSpec = tween(durationMillis = 300)
+                    ),
+                    exit =
+                    slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
+                        300
+                    } + fadeOut()
+                ) {
                     Button(
                         onClick = {
                             confirmPassError = validatePass(
-                                passwordValueChangeReciclador,
-                                confirmPasswordValueChangeReciclador
+                                passwordValueChange,
+                                confirmPasswordValueChange
                             )
                         },
                         modifier = Modifier
@@ -566,280 +528,24 @@ fun ZeroWasteAppplication() {
                             textAlign = TextAlign.Center
                         )
                     }
-                    Spacer(modifier = Modifier.height(15.dp))
                 }
-            }
-            AnimatedVisibility(
-                visible = catadorClick,
-                enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
-                    animationSpec = tween(durationMillis = 200)
-                ),
-                exit =
-                slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
-                    300
-                } + fadeOut()
-            ) {
-                Column(
-                    modifier = Modifier.verticalScroll(rememberScrollState())
+                AnimatedVisibility(
+                    visible = catadorClick,
+                    enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
+                        animationSpec = tween(durationMillis = 200)
+                    ),
+                    exit =
+                    slideOutHorizontally(animationSpec = spring(stiffness = Spring.StiffnessHigh)) {
+                        300
+                    } + fadeOut()
                 ) {
-                    OutlinedTextField(
-                        value = nameValueChangeCatador, onValueChange = { newValue ->
-                            nameValueChangeCatador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.name_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Person,
-                                contentDescription = ""
-                            )
-                        },
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = cpfValueChangeCatador, onValueChange = { newValue ->
-                            cpfValueChangeCatador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.cpf_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Send, //Procurar um Icon para substituir o atual
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = emailValueChangeCatador, onValueChange = { newValue ->
-                            emailValueChangeCatador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.email_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Email,
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = telephoneValueChangeCatador, onValueChange = { newValue ->
-                            telephoneValueChangeCatador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.telephone_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Phone,
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Row {
-                        OutlinedTextField(
-                            value = cepValueChangeCatador, onValueChange = { newValue ->
-                                cepValueChangeCatador = newValue
-                            },
-                            modifier = Modifier
-                                .width(220.dp)
-                                .padding(start = 30.dp)
-                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                            placeholder = { Text(text = stringResource(id = R.string.cep_label)) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Home,
-                                    contentDescription = ""
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true,
-                            shape = RoundedCornerShape(10.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        OutlinedTextField(
-                            value = residencialValueChangeCatador, onValueChange = { newValue ->
-                                residencialValueChangeCatador = newValue
-                            },
-                            modifier = Modifier
-                                .width(200.dp)
-                                .padding(end = 30.dp)
-                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                            placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
-                                    contentDescription = ""
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true,
-                            shape = RoundedCornerShape(10.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = complementValueChangeCatador, onValueChange = { newValue ->
-                            complementValueChangeCatador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.complement_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Info,
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    CalendarDialog(
-                        state = calendarState,
-                        config = CalendarConfig(
-                            yearSelection = true
-                        ),
-                        selection = CalendarSelection.Date { birthdate ->
-                            birthdayValueChangeCatador = birthdate.toString()
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Button(
-                        onClick = {
-                            calendarState.show()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 204, 40))
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.select_bithday),
-                            color = Color.White,
-                            fontSize = 16.sp
-                        )
-                    }
-                    Text(
-                        text = birthdayValueChangeCatador,
-                        modifier = Modifier
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(5.dp))
-                            .height(30.dp)
-                            .fillMaxWidth(),
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = passwordValueChangeCatador, onValueChange = { newValue ->
-                            passwordValueChangeCatador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.password_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = ""
-                            )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                passwordVisibility = !passwordVisibility
-                            }) {
-                                Icon(
-                                    painter = icon,
-                                    contentDescription = "visibility icon",
-                                    modifier = Modifier.width(35.dp)
-                                )
-                            }
-                        },
-                        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedTextField(
-                        value = confirmPasswordValueChangeCatador,
-                        onValueChange = { newValue ->
-                            confirmPasswordValueChangeCatador = newValue
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.confirm_password_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = if (confirmPassError) {
-                                    Icons.Default.Error
-                                } else {
-                                    Icons.Default.Lock
-                                },
-                                contentDescription = "",
-                                tint = if (confirmPassError)
-                                    Color.Red
-                                else
-                                    Color.Gray
-                            )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                confirmPasswordVisibility = !confirmPasswordVisibility
-                            }) {
-                                Icon(
-                                    painter = confirmIcon,
-                                    contentDescription = "Visibility Icon",
-                                    modifier = Modifier.width(35.dp)
-                                )
-                            }
-                        },
-                        isError = confirmPassError,
-                        visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
                     Button(
                         onClick = {
                             confirmPassError = validatePass(
-                                passwordValueChangeCatador,
-                                confirmPasswordValueChangeCatador
+                                passwordValueChange,
+                                confirmPasswordValueChange
                             )
-                                  },
+                        },
                         modifier = Modifier
                             .padding(start = 30.dp, end = 30.dp),
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color(128, 204, 40))
@@ -854,8 +560,8 @@ fun ZeroWasteAppplication() {
                             textAlign = TextAlign.Center
                         )
                     }
-                    Spacer(modifier = Modifier.height(15.dp))
                 }
+                Spacer(modifier = Modifier.height(15.dp))
             }
         }
     }
