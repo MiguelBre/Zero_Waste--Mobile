@@ -27,7 +27,7 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting()
+                    HomeContent()
                 }
             }
         }
@@ -35,7 +35,7 @@ class HomeActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting() {
+fun HomeContent() {
     Column(modifier = Modifier.fillMaxSize()) {
         Button(onClick = { /*TODO*/ }) {
             Image(painter = painterResource(id = R.drawable.borgor), contentDescription = "")
@@ -47,6 +47,6 @@ fun Greeting() {
 @Composable
 fun DefaultPreview2() {
     Zero_WasteApplicationTheme {
-        Greeting()
+        HomeContent()
     }
 }

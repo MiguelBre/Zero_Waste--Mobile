@@ -24,6 +24,10 @@
     <string name="login_as">Entrar como </string>
     <string name="forgot_pass">Esqueceu a senha?</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="empty_error">Esse campo precisa ser preenchido!</string>
+    <string name="empty_field_reduced">Obrigatório!</string>
+    <string name="birthday_error">Selecione uma data válida!</string>
+    <string name="different_pass">As senhas devem ser as mesmas!</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

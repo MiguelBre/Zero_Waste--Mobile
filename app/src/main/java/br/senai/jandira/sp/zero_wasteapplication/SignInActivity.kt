@@ -1,6 +1,7 @@
 package br.senai.jandira.sp.zero_wasteapplication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.*
@@ -19,6 +20,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -30,11 +32,18 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.jandira.sp.zero_wasteapplication.api.ApiCalls
+import br.senai.jandira.sp.zero_wasteapplication.api.RetrofitApi
+import br.senai.jandira.sp.zero_wasteapplication.model.Address
+import br.senai.jandira.sp.zero_wasteapplication.model.User
 import br.senai.jandira.sp.zero_wasteapplication.ui.theme.Zero_WasteApplicationTheme
 import com.maxkeppeker.sheets.core.models.base.rememberSheetState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +67,12 @@ class SignInActivity : ComponentActivity() {
 @Composable
 fun ZeroWasteAppplication() {
 
+    val context = LocalContext.current
+
+    val retrofit = RetrofitApi.getRetrofit()
+    val userCalls = retrofit.create(ApiCalls::class.java)
+    val call = userCalls.getAll()
+
     var recicladorClick by remember {
         mutableStateOf(true)
     }
@@ -74,45 +89,45 @@ fun ZeroWasteAppplication() {
         mutableStateOf(Color.Transparent)
     }
 
-    var nameValueChange by rememberSaveable {
+    var nameState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cpfValueChange by rememberSaveable {
+    var cpfState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var emailValueChange by rememberSaveable {
+    var emailState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var telephoneValueChange by rememberSaveable {
+    var phoneState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var cepValueChange by rememberSaveable {
+    var cepState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var residencialValueChange by rememberSaveable {
+    var resNumberState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var complementValueChange by rememberSaveable {
+    var complementState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var passwordValueChange by rememberSaveable {
+    var passwordState by rememberSaveable {
         mutableStateOf("")
     }
 
-    var confirmPasswordValueChange by rememberSaveable {
+    var confirmPassState by rememberSaveable {
         mutableStateOf("")
     }
 
     val calendarState = rememberSheetState()
 
-    var birthdayValueChange by rememberSaveable {
+    var birthdayState by rememberSaveable {
         mutableStateOf("Ano-Mes-Dia")
     }
 
@@ -137,6 +152,42 @@ fun ZeroWasteAppplication() {
 
     fun validatePass(pass: String, confirmPass: String): Boolean {
         return confirmPass != pass
+    }
+
+    var nameError by remember {
+        mutableStateOf(false)
+    }
+
+    var cpfError by remember {
+        mutableStateOf(false)
+    }
+
+    var emailError by remember {
+        mutableStateOf(false)
+    }
+
+    var phoneError by remember {
+        mutableStateOf(false)
+    }
+
+    var cepError by remember {
+        mutableStateOf(false)
+    }
+
+    var resNumError by remember {
+        mutableStateOf(false)
+    }
+
+    var birthDayError by remember {
+        mutableStateOf(false)
+    }
+
+    var passError by remember {
+        mutableStateOf(false)
+    }
+
+    var conPassError by remember {
+        mutableStateOf(false)
     }
 
     Column {
@@ -245,8 +296,8 @@ fun ZeroWasteAppplication() {
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
                 OutlinedTextField(
-                    value = nameValueChange, onValueChange = { newValue ->
-                        nameValueChange = newValue
+                    value = nameState, onValueChange = { newValue ->
+                        nameState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -259,13 +310,27 @@ fun ZeroWasteAppplication() {
                             contentDescription = ""
                         )
                     },
+                    isError = nameError,
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
-                Spacer(modifier = Modifier.height(15.dp))
+                if (nameError) {
+                    Text(
+                        text = stringResource(id = R.string.empty_error),
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 30.dp, start = 30.dp),
+                        textAlign = TextAlign.End
+                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
                 OutlinedTextField(
-                    value = cpfValueChange, onValueChange = { newValue ->
-                        cpfValueChange = newValue
+                    value = cpfState, onValueChange = { newValue ->
+                        cpfState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -278,14 +343,28 @@ fun ZeroWasteAppplication() {
                             contentDescription = ""
                         )
                     },
+                    isError = cpfError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
-                Spacer(modifier = Modifier.height(15.dp))
+                if (cpfError) {
+                    Text(
+                        text = stringResource(id = R.string.empty_error),
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 30.dp, start = 30.dp),
+                        textAlign = TextAlign.End
+                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
                 OutlinedTextField(
-                    value = emailValueChange, onValueChange = { newValue ->
-                        emailValueChange = newValue
+                    value = emailState, onValueChange = { newValue ->
+                        emailState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -298,14 +377,28 @@ fun ZeroWasteAppplication() {
                             contentDescription = ""
                         )
                     },
+                    isError = emailError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
-                Spacer(modifier = Modifier.height(15.dp))
+                if (emailError) {
+                    Text(
+                        text = stringResource(id = R.string.empty_error),
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 30.dp, start = 30.dp),
+                        textAlign = TextAlign.End
+                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
                 OutlinedTextField(
-                    value = telephoneValueChange, onValueChange = { newValue ->
-                        telephoneValueChange = newValue
+                    value = phoneState, onValueChange = { newValue ->
+                        phoneState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -318,57 +411,100 @@ fun ZeroWasteAppplication() {
                             contentDescription = ""
                         )
                     },
+                    isError = phoneError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
-                Spacer(modifier = Modifier.height(15.dp))
-                Row {
-                    OutlinedTextField(
-                        value = cepValueChange, onValueChange = { newValue ->
-                            cepValueChange = newValue
-                        },
+                if (phoneError) {
+                    Text(
+                        text = stringResource(id = R.string.empty_error),
+                        color = Color.Red,
+                        fontSize = 12.sp,
                         modifier = Modifier
-                            .width(220.dp)
-                            .padding(start = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.cep_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Home,
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
+                            .fillMaxWidth()
+                            .padding(end = 30.dp, start = 30.dp),
+                        textAlign = TextAlign.End
                     )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    OutlinedTextField(
-                        value = residencialValueChange, onValueChange = { newValue ->
-                            residencialValueChange = newValue
-                        },
-                        modifier = Modifier
-                            .width(200.dp)
-                            .padding(end = 30.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
-                        placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
-                                contentDescription = ""
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(15.dp))
                 }
-
-                Spacer(modifier = Modifier.height(15.dp))
+                Row {
+                    Column() {
+                        OutlinedTextField(
+                            value = cepState, onValueChange = { newValue ->
+                                cepState = newValue
+                            },
+                            modifier = Modifier
+                                .width(220.dp)
+                                .padding(start = 30.dp)
+                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                            placeholder = { Text(text = stringResource(id = R.string.cep_label)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Home,
+                                    contentDescription = ""
+                                )
+                            },
+                            isError = cepError,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        if (cepError) {
+                            Text(
+                                text = stringResource(id = R.string.empty_field_reduced),
+                                color = Color.Red,
+                                fontSize = 12.sp,
+                                modifier = Modifier
+                                    .padding(end = 30.dp, start = 30.dp),
+                                textAlign = TextAlign.End
+                            )
+                            Spacer(modifier = Modifier.height(7.dp))
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column() {
+                        OutlinedTextField(
+                            value = resNumberState, onValueChange = { newValue ->
+                                resNumberState = newValue
+                            },
+                            modifier = Modifier
+                                .width(200.dp)
+                                .padding(end = 30.dp)
+                                .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                            placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
+                                    contentDescription = ""
+                                )
+                            },
+                            isError = resNumError,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        if (resNumError) {
+                            Text(
+                                text = stringResource(id = R.string.empty_field_reduced),
+                                color = Color.Red,
+                                fontSize = 12.sp,
+                                modifier = Modifier
+                                    .padding(end = 30.dp, start = 30.dp),
+                                textAlign = TextAlign.End
+                            )
+                            Spacer(modifier = Modifier.height(7.dp))
+                        }
+                    }
+                }
+                if (!resNumError) {
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
                 OutlinedTextField(
-                    value = complementValueChange, onValueChange = { newValue ->
-                        complementValueChange = newValue
+                    value = complementState, onValueChange = { newValue ->
+                        complementState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -385,14 +521,13 @@ fun ZeroWasteAppplication() {
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
-
                 CalendarDialog(
                     state = calendarState,
                     config = CalendarConfig(
                         yearSelection = true
                     ),
                     selection = CalendarSelection.Date { birthdate ->
-                        birthdayValueChange = birthdate.toString()
+                        birthdayState = birthdate.toString()
                     }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -412,7 +547,7 @@ fun ZeroWasteAppplication() {
                     )
                 }
                 Text(
-                    text = birthdayValueChange,
+                    text = birthdayState,
                     modifier = Modifier
                         .padding(start = 30.dp, end = 30.dp)
                         .background(color = Color.White, shape = RoundedCornerShape(5.dp))
@@ -421,11 +556,25 @@ fun ZeroWasteAppplication() {
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(15.dp))
+                if (birthDayError) {
+                    Text(
+                        text = stringResource(id = R.string.birthday_error),
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 30.dp, start = 30.dp),
+                        textAlign = TextAlign.End
+                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+
+                } else {
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
                 OutlinedTextField(
-                    value = passwordValueChange,
+                    value = passwordState,
                     onValueChange = { newValue ->
-                        passwordValueChange = newValue
+                        passwordState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -449,16 +598,30 @@ fun ZeroWasteAppplication() {
                             )
                         }
                     },
+                    isError = passError,
                     visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
-                Spacer(modifier = Modifier.height(15.dp))
+                if (passError) {
+                    Text(
+                        text = stringResource(id = R.string.empty_error),
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 30.dp, start = 30.dp),
+                        textAlign = TextAlign.End
+                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
                 OutlinedTextField(
-                    value = confirmPasswordValueChange,
+                    value = confirmPassState,
                     onValueChange = { newValue ->
-                        confirmPasswordValueChange = newValue
+                        confirmPassState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -496,7 +659,20 @@ fun ZeroWasteAppplication() {
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
-                Spacer(modifier = Modifier.height(20.dp))
+                if (confirmPassError) {
+                    Text(
+                        text = stringResource(id = R.string.different_pass),
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 30.dp, start = 30.dp),
+                        textAlign = TextAlign.End
+                    )
+                    Spacer(modifier = Modifier.height(7.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
                 AnimatedVisibility(
                     visible = recicladorClick,
                     enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
@@ -510,9 +686,19 @@ fun ZeroWasteAppplication() {
                     Button(
                         onClick = {
                             confirmPassError = validatePass(
-                                passwordValueChange,
-                                confirmPasswordValueChange
+                                passwordState,
+                                confirmPassState
                             )
+                            nameError = nameState.isEmpty()
+                            cpfError = cpfState.isEmpty()
+                            emailError = emailState.isEmpty()
+                            phoneError = phoneState.isEmpty()
+                            cepError = cepState.isEmpty()
+                            resNumError = resNumberState.isEmpty()
+                            birthDayError = birthdayState == "Ano-Mes-Dia"
+                            passError = passwordState.isEmpty()
+                            conPassError = confirmPassState.isEmpty()
+
                         },
                         modifier = Modifier
                             .padding(start = 30.dp, end = 30.dp),
@@ -542,9 +728,46 @@ fun ZeroWasteAppplication() {
                     Button(
                         onClick = {
                             confirmPassError = validatePass(
-                                passwordValueChange,
-                                confirmPasswordValueChange
+                                passwordState,
+                                confirmPassState
                             )
+                            nameError = nameState.isEmpty()
+                            cpfError = cpfState.isEmpty()
+                            emailError = emailState.isEmpty()
+                            phoneError = phoneState.isEmpty()
+                            cepError = cepState.isEmpty()
+                            resNumError = resNumberState.isEmpty()
+                            birthDayError = birthdayState == "Ano-Mes-Dia"
+                            passError = passwordState.isEmpty()
+                            conPassError = confirmPassState.isEmpty()
+
+                            if (!confirmPassError && !nameError && !cpfError && !emailError && !phoneError && !cepError && !resNumError && !birthDayError && !passError && !conPassError) {
+                                var userAddress = Address(
+                                    cep = cepState,
+                                    complemento = complementState
+                                )
+                                var userData = User(
+                                    name = nameState,
+                                    cpf = cpfState,
+                                    email = emailState,
+                                    phone = phoneState,
+                                    endereco = userAddress,
+                                    birthDay = birthdayState,
+                                    password = passwordState
+                                )
+
+                                val insertCatador = userCalls.saveCatador(userData)
+
+                                insertCatador.enqueue(object : Callback<User>{
+                                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                                        Log.i("Deu certo?", response.body()!!.email)
+                                    }
+
+                                    override fun onFailure(call: Call<User>, t: Throwable) {
+                                        Log.i("Não deu?", t.message.toString())
+                                    }
+                                })
+                            }
                         },
                         modifier = Modifier
                             .padding(start = 30.dp, end = 30.dp),
