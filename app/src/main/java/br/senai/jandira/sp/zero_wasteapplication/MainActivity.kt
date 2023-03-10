@@ -96,6 +96,18 @@ fun EntryPage() {
                     textAlign = TextAlign.Center
                 )
             }
+
+
+            Button(onClick = {
+                val navigateToHome = Intent(context, HomeActivity::class.java)
+                context.startActivity(navigateToHome)
+            }) {
+                Text(text = "Home")
+            }
+
+
+
+
             Button(
                 onClick = {
                     val navigateToLogIn = Intent(context, LogInActivity::class.java)
