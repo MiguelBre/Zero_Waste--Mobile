@@ -104,11 +104,11 @@ fun HomeContent() {
             textAlign = TextAlign.Center,
             fontSize = 16.sp
         )
-        Box(modifier = Modifier.fillMaxWidth()) {
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             Button(
                 onClick = { /*TODO*/ },
                 border = BorderStroke(2.dp, color = Color.White),
-                modifier = Modifier.padding(start = 25.dp, top = 35.dp),
+                modifier = Modifier.padding(start = 25.dp, top = 20.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(8, 113, 19))
             ) {

@@ -11,6 +11,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,8 +20,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -34,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.jandira.sp.zero_wasteapplication.api.ApiCalls
 import br.senai.jandira.sp.zero_wasteapplication.api.RetrofitApi
+import br.senai.jandira.sp.zero_wasteapplication.ime.rememberImeState
 import br.senai.jandira.sp.zero_wasteapplication.model.Address
 import br.senai.jandira.sp.zero_wasteapplication.model.User
 import br.senai.jandira.sp.zero_wasteapplication.ui.theme.Zero_WasteApplicationTheme
@@ -55,29 +59,39 @@ class SignInActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ZeroWasteAppplication()
+                    ZeroWasteApplication()
                 }
             }
         }
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+//@OptIn(ExperimentalAnimationApi::class)
 @Preview
 @Composable
-fun ZeroWasteAppplication() {
+fun ZeroWasteApplication() {
 
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
 
     val retrofit = RetrofitApi.getRetrofit()
     val userCalls = retrofit.create(ApiCalls::class.java)
     val call = userCalls.getAll()
 
-    var recicladorClick by remember {
+    val imeState = rememberImeState()
+    val scrollState = rememberScrollState()
+
+    LaunchedEffect(key1 = imeState.value) {
+        if (imeState.value) {
+            scrollState.animateScrollTo(scrollState.maxValue / 4, tween(200))
+        }
+    }
+
+    var recyclerClick by remember {
         mutableStateOf(true)
     }
 
-    var catadorClick by remember {
+    var catcherClick by remember {
         mutableStateOf(false)
     }
 
@@ -190,7 +204,11 @@ fun ZeroWasteAppplication() {
         mutableStateOf(false)
     }
 
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -245,8 +263,8 @@ fun ZeroWasteAppplication() {
                                 shape = RoundedCornerShape(topStart = 5.dp, bottomStart = 5.dp)
                             )
                             .clickable {
-                                recicladorClick = true
-                                catadorClick = false
+                                recyclerClick = true
+                                catcherClick = false
                                 color1 = Color(128, 204, 40)
                                 color2 = Color.Transparent
                             }
@@ -267,8 +285,8 @@ fun ZeroWasteAppplication() {
                                 shape = RoundedCornerShape(topEnd = 5.dp, bottomEnd = 5.dp)
                             )
                             .clickable {
-                                recicladorClick = false
-                                catadorClick = true
+                                recyclerClick = false
+                                catcherClick = true
                                 color2 = Color(128, 204, 40)
                                 color1 = Color.Transparent
                             }
@@ -292,17 +310,14 @@ fun ZeroWasteAppplication() {
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center
             )
-            Column(
-                modifier = Modifier.verticalScroll(rememberScrollState())
-            ) {
+            Column {
                 OutlinedTextField(
                     value = nameState, onValueChange = { newValue ->
                         nameState = newValue
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 30.dp, end = 30.dp)
-                        .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+                        .padding(start = 30.dp, end = 30.dp),
                     placeholder = { Text(text = stringResource(id = R.string.name_label)) },
                     leadingIcon = {
                         Icon(
@@ -311,8 +326,17 @@ fun ZeroWasteAppplication() {
                         )
                     },
                     isError = nameError,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     singleLine = true,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.White)
                 )
                 if (nameError) {
                     Text(
@@ -339,12 +363,20 @@ fun ZeroWasteAppplication() {
                     placeholder = { Text(text = stringResource(id = R.string.cpf_label)) },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Code, //Procurar um Icon para substituir o atual
+                            imageVector = Icons.Default.Code,
                             contentDescription = ""
                         )
                     },
                     isError = cpfError,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -378,7 +410,15 @@ fun ZeroWasteAppplication() {
                         )
                     },
                     isError = emailError,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -412,7 +452,15 @@ fun ZeroWasteAppplication() {
                         )
                     },
                     isError = phoneError,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -431,7 +479,7 @@ fun ZeroWasteAppplication() {
                     Spacer(modifier = Modifier.height(15.dp))
                 }
                 Row {
-                    Column() {
+                    Column{
                         OutlinedTextField(
                             value = cepState, onValueChange = { newValue ->
                                 cepState = newValue
@@ -448,7 +496,15 @@ fun ZeroWasteAppplication() {
                                 )
                             },
                             isError = cepError,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = {
+                                    focusManager.moveFocus(FocusDirection.Right)
+                                }
+                            ),
                             singleLine = true,
                             shape = RoundedCornerShape(10.dp)
                         )
@@ -465,7 +521,7 @@ fun ZeroWasteAppplication() {
                         }
                     }
                     Spacer(modifier = Modifier.width(10.dp))
-                    Column() {
+                    Column{
                         OutlinedTextField(
                             value = resNumberState, onValueChange = { newValue ->
                                 resNumberState = newValue
@@ -477,12 +533,20 @@ fun ZeroWasteAppplication() {
                             placeholder = { Text(text = stringResource(id = R.string.residencial_label)) },
                             leadingIcon = {
                                 Icon(
-                                    imageVector = Icons.Default.Menu, //Procurar um Icon para substituir o atual
+                                    imageVector = Icons.Default.Menu,
                                     contentDescription = ""
                                 )
                             },
                             isError = resNumError,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Ascii,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = {
+                                    focusManager.moveFocus(FocusDirection.Down)
+                                }
+                            ),
                             singleLine = true,
                             shape = RoundedCornerShape(10.dp)
                         )
@@ -517,7 +581,15 @@ fun ZeroWasteAppplication() {
                             contentDescription = ""
                         )
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Ascii,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -600,7 +672,15 @@ fun ZeroWasteAppplication() {
                     },
                     isError = passError,
                     visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -655,7 +735,15 @@ fun ZeroWasteAppplication() {
                     },
                     isError = confirmPassError,
                     visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            focusManager.clearFocus()
+                        }
+                    ),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -674,7 +762,7 @@ fun ZeroWasteAppplication() {
                     Spacer(modifier = Modifier.height(20.dp))
                 }
                 AnimatedVisibility(
-                    visible = recicladorClick,
+                    visible = recyclerClick,
                     enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
                         animationSpec = tween(durationMillis = 300)
                     ),
@@ -716,7 +804,7 @@ fun ZeroWasteAppplication() {
                     }
                 }
                 AnimatedVisibility(
-                    visible = catadorClick,
+                    visible = catcherClick,
                     enter = slideInHorizontally(animationSpec = tween(500)) { fullWidth -> -fullWidth } + fadeIn(
                         animationSpec = tween(durationMillis = 200)
                     ),
@@ -756,11 +844,14 @@ fun ZeroWasteAppplication() {
                                     password = passwordState
                                 )
 
-                                val insertCatador = userCalls.saveCatador(userData)
+                                val insertCatcher = userCalls.saveCatador(userData)
 
-                                insertCatador.enqueue(object : Callback<User>{
-                                    override fun onResponse(call: Call<User>, response: Response<User>) {
-                                        Log.i("Deu certo?", response.body()!!.email)
+                                insertCatcher.enqueue(object : Callback<User> {
+                                    override fun onResponse(
+                                        call: Call<User>,
+                                        response: Response<User>
+                                    ) {
+                                        Log.i("Okay?", response.body()!!.toString())
                                     }
 
                                     override fun onFailure(call: Call<User>, t: Throwable) {
@@ -784,8 +875,8 @@ fun ZeroWasteAppplication() {
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(15.dp))
             }
+            Spacer(modifier = Modifier.height(50.dp))
         }
     }
 }
@@ -793,7 +884,7 @@ fun ZeroWasteAppplication() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ZeroWasteApplicationPreview() {
-    ZeroWasteAppplication()
+    ZeroWasteApplication()
 }
 
 

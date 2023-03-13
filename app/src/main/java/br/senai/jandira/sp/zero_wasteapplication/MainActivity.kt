@@ -98,12 +98,13 @@ fun EntryPage() {
             }
 
 
-            Button(onClick = {
-                val navigateToHome = Intent(context, HomeActivity::class.java)
-                context.startActivity(navigateToHome)
-            }) {
-                Text(text = "Home")
-            }
+
+//            Button(onClick = {
+//                val navigateToHome = Intent(context, HomeActivity::class.java)
+//                context.startActivity(navigateToHome)
+//            }) {
+//                Text(text = "Home")
+//            }
 
 
 
