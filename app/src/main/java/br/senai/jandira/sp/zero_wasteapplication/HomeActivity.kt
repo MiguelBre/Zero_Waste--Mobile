@@ -6,10 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +46,11 @@ class HomeActivity : ComponentActivity() {
 
 @Composable
 fun HomeContent() {
+
+    var  menuVisibility by remember {
+        mutableStateOf(false)
+    }
+
     Image(
         painter = painterResource(id = R.drawable.ellipse_top_home),
         contentDescription = "",
@@ -67,6 +73,7 @@ fun HomeContent() {
             modifier = Modifier
                 .size(35.dp)
                 .padding(start = 10.dp, top = 10.dp)
+                .clickable { m }
         )
         Row(
             modifier = Modifier
